@@ -29,7 +29,14 @@ var ingestion = require('../..');
 
 var file = process.argv[2];
 
-ingestion.tconnect.parse(fs.createReadStream(file))
+var timezone = process.argv[3];
+
+if (timezone == null) {
+  timezone = 'America/Chicago';
+}
+
+
+ingestion.tconnect.parse(fs.createReadStream(file), {timezone:timezone})
     .subscribe(
     function (e) {
       console.log('%j', e);
